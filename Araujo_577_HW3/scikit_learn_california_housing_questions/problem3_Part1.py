@@ -65,22 +65,9 @@ numeric_df = df.select_dtypes(include=['number'])
 X = numeric_df.drop('MedHouseVal', axis=1)
 y = numeric_df['MedHouseVal']
 
-from sklearn.preprocessing import PolynomialFeatures
-polynomial_converter = PolynomialFeatures(degree=8, include_bias=False)
-print(X.shape)
-poly_features = polynomial_converter.fit_transform(X)
-print(poly_features.shape)
 
 from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(poly_features, y, test_size=0.3, random_state=42)
-
-from sklearn.preprocessing import StandardScaler
-scaler = StandardScaler()
-scaler.fit(X_train)
-
-
-X_train = scaler.transform(X_train)
-X_test = scaler.transform(X_test)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 from sklearn.linear_model import LinearRegression
 
@@ -89,9 +76,12 @@ model.fit(X_train, y_train)
 
 y_pred = model.predict(X_test)
 
-sns.scatterplot(x=X_test, y=y_pred)
+# Create the scatter plot
+plt.figure(figsize=(10, 6))
+sns.scatterplot(x=y_test, y=y_pred, alpha=0.6, edgecolor='w')
 
+plt.xlabel('Predicted house prices', fontsize=12)
+plt.ylabel('MedHouseVal', fontsize=12)
+plt.ylim(0, 5.1)
 plt.show()
-
-# numeric_df.info()
 
