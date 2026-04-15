@@ -13,8 +13,10 @@ median_income = df['AMT_INCOME_TOTAL'].median()
 # filters the dataframe for incomes below the median
 bottom_half = df[df['AMT_INCOME_TOTAL'] <= median_income]
 
+# order
 order = ['Married', 'Civil marriage', 'Widow', 'Single / not married', 'Separated']
 
+# plot
 sns.catplot(data=bottom_half, x='NAME_FAMILY_STATUS', y='AMT_INCOME_TOTAL', hue='FLAG_OWN_REALTY', hue_order=['N', 'Y'], kind='box', order=order)
 
 plt.show()

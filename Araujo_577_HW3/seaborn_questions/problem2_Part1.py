@@ -18,4 +18,4 @@ y = -employed['DAYS_EMPLOYED']
 sns.scatterplot(x=x, y=y, alpha=0.01, s=10)
 plt.show()
 
-# complete
+

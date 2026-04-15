@@ -7,18 +7,21 @@ import matplotlib.pyplot as plt
 
 df = pd.read_csv('application_record.csv')
 
-# print(df.columns)
 # we want to show the relationship between days employed
-employed = df[df['DAYS_EMPLOYED'] < 0]
-employed['DAYS_EMPLOYED'] = -employed['DAYS_EMPLOYED']
-x = -employed['DAYS_BIRTH']
-y = employed['DAYS_EMPLOYED']
-x = x.apply(lambda age_in_years: age_in_years // 365)
+employed = df[df['DAYS_EMPLOYED'] != 365423]
 
-sns.histplot(data=df, x=x, binwidth=1, color=sns.xkcd_rgb["light red"])
-plt.ylabel('Age in Years')
+# transform to postive
+employed['DAYS_BIRTH'] = -employed['DAYS_BIRTH']
+employed['DAYS_EMPLOYED'] = -employed['DAYS_EMPLOYED']
+
+# convert days => years
+employed['DAYS_BIRTH'] = employed['DAYS_BIRTH'].apply(lambda age_in_years: age_in_years // 365)
+
+x = employed['DAYS_BIRTH']
+y = employed['DAYS_EMPLOYED']
+
+# plot and label
+sns.histplot(data=employed, x=x, bins=50, color=sns.xkcd_rgb["light red"])
+plt.xlabel('Age in Years')
 plt.show()
 
-
-
-# incomplete

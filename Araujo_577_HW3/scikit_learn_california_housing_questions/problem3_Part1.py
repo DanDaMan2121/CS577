@@ -5,10 +5,10 @@ import sklearn
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# df = pd.read_csv('Ocean_Proximity.csv')
-# print(df.columns)
+
 
 from sklearn.datasets import fetch_california_housing
+# TASK 1
 
 # This method is used to download and load california housing dataset
 # as_frame = True is an option that returns a Pandas object instead of a numpy array
@@ -49,15 +49,18 @@ keys = df['ocean_proximity'].unique()
 values = range(len(keys))
 proximity_map = {keys[i]:values[i] for i in range(len(keys))}
 
+# map string to numerical
 # df['ocean_proximity'] = df['ocean_proximity'].replace(proximity_map)
 print(df.head(3))
 print('=======')
 
 # 6
 sns.barplot(data=df, x='ocean_proximity', y='MedHouseVal')
+# what can be infered from this chart is that the close you are to the ocean the higher the MedHouseVal
 
 # 7
 sns.jointplot(x=df['MedInc'], y=df['MedHouseVal'], kind='hex', color='orange')
+# what can be infered from this chart is that as the income increases the House value drastically increases aswell
 
 # 8
 df['ocean_proximity'] = df['ocean_proximity'].replace(proximity_map)
