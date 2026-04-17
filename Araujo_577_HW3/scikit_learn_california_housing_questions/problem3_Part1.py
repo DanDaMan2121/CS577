@@ -5,10 +5,10 @@ import sklearn
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-
+# df = pd.read_csv('Ocean_Proximity.csv')
+# print(df.columns)
 
 from sklearn.datasets import fetch_california_housing
-# TASK 1
 
 # This method is used to download and load california housing dataset
 # as_frame = True is an option that returns a Pandas object instead of a numpy array
@@ -49,18 +49,15 @@ keys = df['ocean_proximity'].unique()
 values = range(len(keys))
 proximity_map = {keys[i]:values[i] for i in range(len(keys))}
 
-# map string to numerical
 # df['ocean_proximity'] = df['ocean_proximity'].replace(proximity_map)
 print(df.head(3))
 print('=======')
 
 # 6
 sns.barplot(data=df, x='ocean_proximity', y='MedHouseVal')
-# what can be infered from this chart is that the close you are to the ocean the higher the MedHouseVal
 
 # 7
 sns.jointplot(x=df['MedInc'], y=df['MedHouseVal'], kind='hex', color='orange')
-# what can be infered from this chart is that as the income increases the House value drastically increases aswell
 
 # 8
 df['ocean_proximity'] = df['ocean_proximity'].replace(proximity_map)
@@ -68,9 +65,22 @@ numeric_df = df.select_dtypes(include=['number'])
 X = numeric_df.drop('MedHouseVal', axis=1)
 y = numeric_df['MedHouseVal']
 
+from sklearn.preprocessing import PolynomialFeatures
+polynomial_converter = PolynomialFeatures(degree=8, include_bias=False)
+print(X.shape)
+poly_features = polynomial_converter.fit_transform(X)
+print(poly_features.shape)
 
 from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(poly_features, y, test_size=0.3, random_state=42)
+
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+scaler.fit(X_train)
+
+
+X_train = scaler.transform(X_train)
+X_test = scaler.transform(X_test)
 
 from sklearn.linear_model import LinearRegression
 
@@ -79,12 +89,9 @@ model.fit(X_train, y_train)
 
 y_pred = model.predict(X_test)
 
-# Create the scatter plot
-plt.figure(figsize=(10, 6))
-sns.scatterplot(x=y_test, y=y_pred, alpha=0.6, edgecolor='w')
+sns.scatterplot(x=X_test, y=y_pred)
 
-plt.xlabel('Predicted house prices', fontsize=12)
-plt.ylabel('MedHouseVal', fontsize=12)
-plt.ylim(0, 5.1)
 plt.show()
+
+# numeric_df.info()
 

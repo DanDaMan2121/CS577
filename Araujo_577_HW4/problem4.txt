@@ -1,0 +1,8 @@
+TPR and FPR. Suppose a dataset consists of 𝑁0 points with true label 𝑦 = 0 and 𝑁1 points with true label 𝑦 = 1.
+You are given a classifier that outputs predicted label 𝑦̂ = 0 with probability 1 − 𝑝 and 𝑦̂ = 1 with probability 𝑝.
+This is regardless of the input feature value. Explain why, on an average, this classifier will show (𝐹𝑃𝑅, 𝑇𝑃𝑅) =
+(𝑝, 𝑝)
+
+Because the classifier ignores features and behaves solely as a random agent that picks label 1 with probability 
+for both true classes, the proportion of positive predictions is 
+for both negative samples (FPR) and positive samples (TPR). Therefore, on average, (𝐹𝑃𝑅, 𝑇𝑃𝑅) = (𝑝, 𝑝)
