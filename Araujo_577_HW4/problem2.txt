@@ -1,0 +1,5 @@
+Cross Validation. Using the regularized squared loss function discussed in class, i.e.
+briefly explain why attempting to minimize this function results in an optimal value of 𝜆∗ = 0
+
+While regularized models use cross-validation to select 
+to prevent overfitting and improve generalization on new data, directly minimizing this cost function on the training set leads to  
